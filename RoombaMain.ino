@@ -3,12 +3,7 @@
 // For CS 241
 //
 // Started: 4/6/2024
-// Updated: 4/23/2024
-
-
-// Roomba Serial Comms Manual
-// https://cdn.hackaday.io/files/1747287475562752/Roomba_SCI_manual.pdf
-
+// Updated: 4/25/2024
 
 #include "SoftwareSerial.h"
 #include <Wire.h>
@@ -17,6 +12,7 @@
 const int buttonPin = 8; 
 const int rxPin = 15;
 const int txPin = 14;
+
 SoftwareSerial Roomba = SoftwareSerial(rxPin, txPin);
 
 Adafruit_AMG88xx amg;
@@ -250,17 +246,19 @@ void loop() {
     }
 
 
-// turn off after 30ish seconds
+// turn off after 30
     const long offTime = 30; //seconds
     const long offTimeMillis = offTime * 1000;
     long elapsed = millis() - startTime; 
     if (elapsed > offTimeMillis)
     {
         Roomba.write(ROOMBA_POWER_OPCODE);  //Shutoff code 
-        setup(); 
+        setup();                            //Restart
+        spin = 0; 
     }
 
     delay(200); // delay to slow down how fast the loop runs in in accordance with ag8338 refresh rate
 }
+
 
 
