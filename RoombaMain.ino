@@ -257,7 +257,7 @@ void loop() {
     if (elapsed > offTimeMillis)
     {
         Roomba.write(ROOMBA_POWER_OPCODE);  //Shutoff code 
-        while(1);
+        setup(); 
     }
 
     delay(200); // delay to slow down how fast the loop runs in in accordance with ag8338 refresh rate
